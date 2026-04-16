@@ -4,7 +4,7 @@ def closure(grammar, items):
     closure_set = set(items)
     added = True
 
-    print("\n🔹 Cálculo de CERRADURA:\n")
+    print("\nCálculo de CERRADURA:\n")
 
     while added:
         added = False
