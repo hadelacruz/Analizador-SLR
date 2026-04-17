@@ -29,9 +29,8 @@ Para ejecutar el programa, abre la terminal y usa:
 python main.py
 ```
 
-Al abrirlo te encontrarás con un menú amigable con dos opciones principales:
-1. **Ejecutar pruebas predefinidas**: Evaluará automáticamente el estado `I0` con punto al inicio tanto para la gramática de la clase como para la gramática del Problema 1.
-2. **Entrada manual de ítems**: Entrarás en un modo para probar el comportamiento de la función iterativa. 
-   - Se te pedirá elegir la gramática (Clase o Problema 1).
-   - Puedes colocar cualquier lado izquierdo (ej: `E`), el derecho separado por espacios (ej: `E + T`), y la posición que quieras para el "Punto" de análisis (dot).
-   - Termina presionando `Enter` sin escribir lado izquierdo para iniciar el cálculo.
+Al abrirlo te encontrarás con un menú interactivo con dos opciones principales:
+1. **Ejecutar pruebas predefinidas**: Evaluará automáticamente el estado inicial (`I0`) con el punto al inicio, mostrando el desglose paso a paso de la cerradura tanto para la gramática de la clase como para la gramática del Problema 1.
+2. **Entrada manual (Gramática e Ítems)**: Te permite probar el algoritmo LR(0) con cualquier gramática que desees crear desde cero.
+   - **Paso 1 (Tu Gramática):** El programa te pedirá ingresar el lado izquierdo (ej: `A`) y el lado derecho separado por espacios (ej: `A + T`). Te irá preguntando `(s/n)` si deseas seguir agregando reglas. *Recuerda*: para calcular un Estado $I_0$ real, es buena práctica agregar primero tu producción extendida (Ej: `A' -> A`).
+   - **Paso 2 (Tu Ítem Inicial):** Una vez construida la gramática, ingresarás tu ítem "semilla" para iniciar la cerradura LR(0). Indicarás lado izquierdo, lado derecho, y la posición del punto (ej: `0` para que esté al inicio). El calculador hará el resto de forma iterativa y en cascada.

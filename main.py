@@ -25,24 +25,51 @@ def build_grammar_prob1():
     return grammar
 
 
+def manual_grammar_input():
+    grammar = Grammar()
+    print("\n--- 1. Ingresar Gramática ---")
+    while True:
+        left = input("Lado izquierdo (No-Terminal): ").strip()
+        if not left:
+            print("El lado izquierdo no puede estar vacío. Intente de nuevo.")
+            continue
+        right_str = input("Lado derecho (símbolos separados por un espacio, ej: E + T): ").strip()
+        right = right_str.split() if right_str else []
+        grammar.add_production(left, right)
+        print(f"=> Producción agregada: {left} -> {' '.join(right)}\n")
+        
+        continuar = input("¿Desea agregar otra producción? (s/n): ").strip().lower()
+        if continuar != 's':
+            break
+            
+    return grammar
+
+
 def manual_input(grammar):
     items = set()
-    print("\n--- Ingresar Conjunto de Ítems Iniciales ---")
+    print("\n--- 2. Ingresar Conjunto de Ítems Iniciales ---")
     while True:
-        left = input("Lado izquierdo (Deje en blanco para terminar): ").strip()
+        left = input("Lado izquierdo: ").strip()
         if not left:
-            if not items:
-                print("Debe ingresar al menos un ítem.\n")
-                continue
-            break
+            print("El lado izquierdo no puede estar vacío. Intente de nuevo.")
+            continue
         right_str = input("Lado derecho (símbolos separados por un espacio, ej: E + T): ").strip()
         right = right_str.split() if right_str else []
         try:
             dot = int(input(f"Posición del punto (0 a {len(right)}): ").strip())
             items.add(Item(left, right, dot))
-            print("=> Ítem agregado. Ingrese otro o deje el lado izquierdo en blanco para finalizar.\n")
+            print("=> Ítem agregado.\n")
         except ValueError:
             print("=> Posición inválida. Intente de nuevo.\n")
+            continue
+
+        continuar = input("¿Desea agregar otro ítem al conjunto inicial? (s/n): ").strip().lower()
+        if continuar != 's':
+            break
+
+    if not items:
+        print("No ingresó ningún ítem. Cancelando y volviendo al menú principal...\n")
+        return
 
     print_items("Ítem(s) inicial(es)", items)
     result = closure(grammar, items)
@@ -73,26 +100,16 @@ def main():
         print("    MENÚ DE CERRADURA LR(0)    ")
         print("-"*35)
         print("1. Ejecutar pruebas predefinidas (Clase y Problema 1)")
-        print("2. Entrada manual de ítems")
+        print("2. Entrada manual (Gramática e Ítems)")
         print("3. Salir")
         opc = input("Opción: ").strip()
 
         if opc == '1':
             run_tests()
         elif opc == '2':
-            print("\nSeleccione la gramática a utilizar para sus ítems:")
-            print("1. Gramática de Clase (E -> E + T | T ...)")
-            print("2. Gramática Problema 1 (S -> SS+ | SS* | a)")
-            g_opc = input("Opción de gramática: ").strip()
-            
-            if g_opc == '1':
-                manual_input(build_grammar_class())
-            elif g_opc == '2':
-                manual_input(build_grammar_prob1())
-            else:
-                print("Opción no válida. Volviendo al menú principal.")
+            custom_grammar = manual_grammar_input()
+            manual_input(custom_grammar)
         elif opc == '3':
-            print("Saliendo del programa...")
             break
         else:
             print("Opción no válida. Intente de nuevo.")
